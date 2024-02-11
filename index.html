@@ -37,6 +37,18 @@
 			pointer-events: auto;
 		}
 
+		/* canvas::before {
+			content: '';
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: red;
+			z-index: 20 !important;
+		} */
+
 		body>*:not(canvas) {
 			z-index: 5 !important;
 			color: white !important;
@@ -50,10 +62,17 @@
 		}
 
 		.formsec {
-			display: flex;
+			width: 100%;
+			height: 100%;
 			justify-content: center;
 			align-items: center;
 			height: 100%;
+			display: none;
+		}
+
+		.formsec,
+		.formsec * {
+			z-index: 50 !important;
 		}
 
 		.formsec form {
@@ -63,7 +82,7 @@
 			padding: .5rem;
 			border: none;
 			border-radius: 15px;
-			box-shadow: 1px 1px 5px white;
+			box-shadow: .5px .5px 1px rgb(146, 146, 146), -.5px -.5px 1px rgb(146, 146, 146);
 		}
 
 		.formsec form div {
@@ -145,10 +164,14 @@
 		header>div>div>a {
 			font-size: 1.5rem;
 		}
+
+		.formsec.active {
+			display: flex;
+		}
 	</style>
 </head>
 
-<body>
+<body style="background: black;">
 	<header class="header">
 		<div class="container">
 			<div class="logo">
@@ -163,10 +186,28 @@
 		</div>
 	</header>
 
+	<div class="formsec">
+		<form action="/" method="post">
+			<div>
+				<label for="name">Fullname</label>
+				<input type="text" id="name" placeholder="Enter fullname">
+			</div>
+
+			<div>
+				<label for="email">Email</label>
+				<input type="text" id="email" placeholder="Enter email">
+			</div>
+
+			<div>
+				<input type="submit" value="Send It 🧲">
+			</div>
+		</form>
+	</div>
+
 	<!-- ....other element, not yet... -->
 
 	<!-- Do not add or touch please -->
-	<canvas id="sec" class="sec"></canvas>
+	<canvas id="sec" class="sec"></canvas>/
 	<script type="module" src="/index.js"></script>
 </body>
 

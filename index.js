@@ -2,8 +2,8 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-
 const sec = document.querySelector('#sec');
+const model = document.querySelector('.formsec');
 
 const scene = new THREE.Scene();
 let camera = new THREE.PerspectiveCamera(75, sec.clientWidth / sec.clientHeight, 0.1, 1000);
@@ -27,7 +27,10 @@ controls.enablePan = true;
 controls.enableRotate = true;
 controls.maxPolarAngle = Math.PI / 2;
 controls.minPolarAngle = Math.PI / 2;
-console.log("controles ", controls);
+
+// Raycaster and mouse for object picking
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
 
 // GLB Load file
 loader.load(
@@ -37,17 +40,8 @@ loader.load(
         glb.scene.scale["y"] += 1.2;
         glb.scene.scale["z"] += 1.2;
 
-        // glb.scene.rotation["x"] += 0;
-        // glb.scene.rotation["y"] += 0;
-        // glb.scene.rotation["z"] += 0;
-
         glb.scene.position["x"] += 0;
         glb.scene.position["y"] += 0;
-        // glb.scene.position["z"] += 0;
-
-        // glb.scene.matrixWorldNeedsUpdate = true;
-
-        console.log(glb.scene.position);
 
         scene.add(glb.scene);
     },
@@ -55,13 +49,13 @@ loader.load(
         console.log((xhr.loaded / xhr.total + 100) + "% loaded");
     },
     function (error) {
-        console.error("An error occured!, " + error);
+        console.error("An error occurred!", error);
     }
 );
 
 function animate() {
     requestAnimationFrame(animate);
-    controls.update(); // add this line
+    controls.update();
     renderer.render(scene, camera);
 }
 
@@ -72,3 +66,20 @@ window.addEventListener('resize', function () {
     camera.updateProjectionMatrix();
     renderer.setSize(sec.clientWidth, sec.clientHeight);
 });
+
+// Update the mouse position
+renderer.domElement.addEventListener('mousemove', function (event) {
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+}, false);
+
+// Check for clicks and open the model popup
+renderer.domElement.addEventListener('click', function () {
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObjects(scene.children, true);
+    if (intersects.length > 0) {
+        // Open your model popup here
+        console.log("Earth clicked!");
+        model.classList.toggle('active');
+    }
+}, false);
