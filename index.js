@@ -34,7 +34,7 @@ const mouse = new THREE.Vector2();
 
 // GLB Load file
 loader.load(
-    'earth.glb',
+    '/imgs/earth.glb',
     function (glb) {
         glb.scene.scale["x"] += 1.2;
         glb.scene.scale["y"] += 1.2;
