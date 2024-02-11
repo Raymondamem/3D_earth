@@ -1,0 +1,65 @@
+@keyframes anim1 {
+  from {
+    background-color: brown;
+  }
+  to {
+    background-color: burlywood;
+  }
+}
+@keyframes anim2 {
+  from {
+    background-color: burlywood;
+  }
+  to {
+    background-color: brown;
+  }
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: all 300ms ease-in-out;
+  text-align: justify;
+  color: white;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+main {
+  height: -moz-fit-content;
+  height: fit-content;
+  background: url(./pexels-eddson-lens-18684565.jpg) no-repeat center center/cover fixed;
+}
+
+.content-grid,
+.full-width {
+  --padding-inline: 1rem;
+  --content-max-width: 900px;
+  --breakout-max-width: 1200px;
+  --breakout-size: calc((var(--breakout-max-width) - var(--content-max-width)) / 2);
+  display: grid;
+  grid-template-columns: [full-width-start] minmax(var(--padding-inline), 1fr) [breakout-start] minmax(0, var(--breakout-size)) [content-start] min(100% - var(--padding-inline) * 2, var(--content-max-width)) [content-end] minmax(0, var(--breakout-size)) [breakout-end] minmax(var(--padding-inline), 1fr) [full-width-end];
+}
+.content-grid > :not(.breakout, .full-width),
+.full-width > :not(.breakout, .full-width) {
+  grid-column: content;
+}
+.content-grid > .breakout,
+.full-width > .breakout {
+  grid-column: breakout;
+}
+.content-grid > .full-width:not(.full-width > .full-width),
+.full-width > .full-width:not(.full-width > .full-width) {
+  grid-column: full-width;
+}
+
+.wrapImg img {
+  width: 100%;
+  height: 450px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}/*# sourceMappingURL=style.css.map */
